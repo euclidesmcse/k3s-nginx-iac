@@ -1,6 +1,13 @@
 terraform {
   required_version = ">= 1.5"
 
+  # Local backend at a fixed, absolute path so both manual `terraform apply`
+  # runs and the self-hosted GitHub Actions runner (which checks out into a
+  # different, ephemeral workspace) share the same state on srv01.
+  backend "local" {
+    path = "/home/euclides/.terraform-state/k3s-nginx-iac.tfstate"
+  }
+
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
