@@ -21,6 +21,14 @@
     --rule: #ddd2b0;
     --focus: #2f5fb3;
 
+    /* Fixed brand colors: used as backgrounds for blocks (hero, CTA, crest)
+       that are always a dark navy / brick panel with light text by design —
+       these must NOT invert between themes, unlike --navy/--brick above
+       which are used as theme-adaptive text/accent colors on panels that
+       do flip. */
+    --navy-fixed: #1c2b4a;
+    --brick-fixed: #8c3a2b;
+
     --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
     --font-body: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-block: ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
@@ -150,8 +158,8 @@
     border: 1px solid transparent;
     cursor: pointer;
   }
-  .btn-primary { background: var(--brick); color: #fff8ee; }
-  .btn-primary:hover { background: color-mix(in srgb, var(--brick) 85%, black); }
+  .btn-primary { background: var(--brick-fixed); color: #fff8ee; }
+  .btn-primary:hover { background: color-mix(in srgb, var(--brick-fixed) 85%, black); }
   .btn-ghost { background: transparent; border-color: var(--rule); color: var(--ink); }
   .btn-ghost:hover { border-color: var(--ink-dim); }
   @media (max-width: 760px) {
@@ -160,7 +168,7 @@
 
   /* ---------- hero ---------- */
   .hero {
-    background: var(--navy);
+    background: var(--navy-fixed);
     color: #f3ede0;
     position: relative;
     overflow: hidden;
@@ -313,7 +321,7 @@
   .age-card li svg { flex: none; width: 1.05rem; height: 1.05rem; margin-top: 0.15rem; color: var(--gold); }
 
   /* ---------- programs row ---------- */
-  .programs-band { background: var(--navy); color: #f3ede0; }
+  .programs-band { background: var(--navy-fixed); color: #f3ede0; }
   .programs-band .section-head p { color: #c7cfe4; }
   .program-row {
     display: flex;
@@ -369,7 +377,7 @@
     gap: 1.5rem;
   }
   .modality-card {
-    background: var(--navy);
+    background: var(--navy-fixed);
     color: #f3ede0;
     border-radius: 0.9rem;
     padding: 1.75rem;
@@ -390,7 +398,7 @@
 
   /* ---------- cta banner ---------- */
   .cta-banner {
-    background: var(--brick);
+    background: var(--brick-fixed);
     color: #fff8ee;
     border-radius: 0.9rem;
     padding: 1.5rem 1.75rem;
@@ -401,7 +409,7 @@
     flex-wrap: wrap;
   }
   .cta-banner h2 { font-size: 1.375rem; color: #fff8ee; }
-  .cta-banner .btn-primary { background: #fff8ee; color: var(--brick); }
+  .cta-banner .btn-primary { background: #fff8ee; color: var(--brick-fixed); }
   .cta-banner .btn-primary:hover { background: #fff; }
 
   /* ---------- testimonials ---------- */
@@ -424,7 +432,7 @@
   .testi-who { display: flex; align-items: center; gap: 0.7rem; }
   .avatar {
     width: 2.5rem; height: 2.5rem; border-radius: 50%;
-    background: var(--navy); color: var(--gold-bright);
+    background: var(--navy-fixed); color: #f0c876;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--font-block); font-weight: 700; font-size: 0.8125rem;
     flex: none;
@@ -511,7 +519,7 @@
   <nav class="wrap">
     <a class="brand" href="#top">
       <svg viewBox="0 0 80 116" role="img" aria-label="Union English Institute">
-        <polygon points="8,8 72,8 72,52 40,94 8,52" fill="var(--navy)"/>
+        <polygon points="8,8 72,8 72,52 40,94 8,52" fill="var(--navy-fixed)" stroke="var(--gold-bright)" stroke-width="2"/>
         <polygon points="40,15 42.12,21.09 48.56,21.22 43.42,25.11 45.29,31.28 40,27.6 34.71,31.28 36.58,25.11 31.44,21.22 37.88,21.09" fill="var(--gold-bright)"/>
         <text x="40" y="74" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="30" fill="var(--gold-bright)">U</text>
         <rect x="4" y="96" width="72" height="18" rx="3" fill="var(--gold-bright)"/>
