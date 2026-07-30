@@ -1,8 +1,8 @@
 # k3s-nginx-iac
 
-Terraform (provider [`hashicorp/kubernetes`](https://registry.terraform.io/providers/hashicorp/kubernetes/latest)) config that deploys an Nginx `Deployment` + `LoadBalancer` `Service` on the k3s cluster running on `srv01` (192.168.1.161).
+Terraform (provider [`hashicorp/kubernetes`](https://registry.terraform.io/providers/hashicorp/kubernetes/latest)) config that deploys an Nginx `Deployment` on the k3s cluster running on `srv01` (192.168.1.161), exposed through an `Ingress`.
 
-Exposed on port 80, reachable from any IP that can reach the node (k3s's built-in ServiceLB assigns the node's LAN IP automatically).
+k3s ships Traefik as its default ingress controller, already bound to host ports 80/443. Routing through an Ingress (instead of a second `LoadBalancer` Service, which would fail to schedule — port 80 is already claimed by Traefik) makes nginx reachable on port 80 from any IP that can reach the node.
 
 ## Landing page
 
@@ -20,7 +20,7 @@ Access: `http://192.168.1.161` (or the IP shown in the `external_ip` output).
 
 ## Layout
 
-- `main.tf` — namespace, ConfigMap (HTML content), Deployment, Service
+- `main.tf` — namespace, ConfigMap (HTML content), Deployment, Service, Ingress
 - `variables.tf` — namespace, image, replicas, port, kubeconfig path
-- `outputs.tf` — service name and external IP
+- `outputs.tf` — service name and Traefik's node IP
 - `html/index.html` — page served by Nginx (placeholder for now)

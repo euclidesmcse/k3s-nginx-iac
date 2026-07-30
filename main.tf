@@ -88,7 +88,7 @@ resource "kubernetes_service" "nginx" {
   }
 
   spec {
-    type = "LoadBalancer"
+    type = "ClusterIP"
 
     selector = {
       app = "nginx"
@@ -97,6 +97,39 @@ resource "kubernetes_service" "nginx" {
     port {
       port        = var.service_port
       target_port = 80
+    }
+  }
+}
+
+# k3s ships Traefik as its default ingress controller, already bound to
+# host ports 80/443 via its own LoadBalancer service. Routing through an
+# Ingress (instead of a second LoadBalancer Service) avoids competing for
+# those ports and makes nginx reachable on http://<node-ip>/ from any IP.
+resource "kubernetes_ingress_v1" "nginx" {
+  metadata {
+    name      = "nginx"
+    namespace = kubernetes_namespace.nginx.metadata[0].name
+  }
+
+  spec {
+    ingress_class_name = "traefik"
+
+    rule {
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+
+          backend {
+            service {
+              name = kubernetes_service.nginx.metadata[0].name
+              port {
+                number = var.service_port
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
